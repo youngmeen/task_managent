@@ -17,7 +17,7 @@ const Login = () => {
       const user = {
         id: 1,
         username: 'test',
-        name: '김태호',
+        name: '김영민',
         email: 'test@example.com',
         isLoggedIn: true
       };

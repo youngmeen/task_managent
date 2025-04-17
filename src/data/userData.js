@@ -2,7 +2,7 @@
 export const userProfile = {
   id: 1,
   username: 'test',
-  name: '김태호',
+  name: '',
   email: 'test@example.com',
   position: '프로젝트 매니저',
   department: '개발팀',
