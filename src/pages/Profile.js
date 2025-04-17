@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Bell, Moon, Settings, Globe, LogOut } from 'lucide-react';
+import { User, Bell, Moon, Settings, Globe, LogOut, Clock } from 'lucide-react';
 import Header from '../components/Header';
 import { userProfile, userNotifications, userActivities } from '../data/userData';
 

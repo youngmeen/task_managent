@@ -1,0 +1,15 @@
+{
+  "useDatabase": false,
+  "databaseConfig": {
+    "type": "mongodb",
+    "uri": "mongodb://localhost:27017/task-management",
+    "options": {
+      "useNewUrlParser": true,
+      "useUnifiedTopology": true
+    }
+  },
+  "useSampleData": true,
+  "sampleDataPath": "./src/data",
+  "serverPort": 8080,
+  "apiBasePath": "/api"
+}
