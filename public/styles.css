@@ -1,0 +1,244 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c3e50;
+}
+
+h2 {
+  color: #3498db;
+  margin-bottom: 15px;
+}
+
+.task-form, .task-list {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.filters select {
+  flex: 1;
+}
+
+.task-card {
+  background-color: #fff;
+  border-left: 5px solid #3498db;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  position: relative;
+}
+
+.task-card.priority-높음 {
+  border-left-color: #e74c3c;
+}
+
+.task-card.priority-보통 {
+  border-left-color: #f39c12;
+}
+
+.task-card.priority-낮음 {
+  border-left-color: #27ae60;
+}
+
+.task-card h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+.task-card p {
+  margin-bottom: 10px;
+  color: #7f8c8d;
+}
+
+.task-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.task-actions button {
+  padding: 5px 10px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
+
+.edit-btn {
+  background-color: #f39c12;
+}
+
+.edit-btn:hover {
+  background-color: #d35400;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.status-할일 {
+  background-color: #3498db;
+}
+
+.status-진행중 {
+  background-color: #f39c12;
+}
+
+.status-완료 {
+  background-color: #27ae60;
+}
+
+.priority-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.priority-높음 {
+  background-color: #e74c3c;
+}
+
+.priority-보통 {
+  background-color: #f39c12;
+}
+
+.priority-낮음 {
+  background-color: #27ae60;
+}
+
+.due-date {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 14px;
+  color: #7f8c8d;
+}
+
+/* 모달 스타일 */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 600px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #e74c3c;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .filters {
+    flex-direction: column;
+  }
+}

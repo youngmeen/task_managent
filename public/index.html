@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>태스크 관리 시스템</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>태스크 관리 시스템</h1>
+    
+    <div class="task-form">
+      <h2>새 태스크 추가</h2>
+      <form id="taskForm">
+        <div class="form-group">
+          <label for="title">제목:</label>
+          <input type="text" id="title" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="description">설명:</label>
+          <textarea id="description"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="status">상태:</label>
+          <select id="status">
+            <option value="할 일">할 일</option>
+            <option value="진행 중">진행 중</option>
+            <option value="완료">완료</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="priority">우선순위:</label>
+          <select id="priority">
+            <option value="낮음">낮음</option>
+            <option value="보통" selected>보통</option>
+            <option value="높음">높음</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="dueDate">마감일:</label>
+          <input type="date" id="dueDate">
+        </div>
+        
+        <button type="submit">태스크 추가</button>
+      </form>
+    </div>
+    
+    <div class="task-list">
+      <h2>태스크 목록</h2>
+      <div class="filters">
+        <select id="statusFilter">
+          <option value="all">모든 상태</option>
+          <option value="할 일">할 일</option>
+          <option value="진행 중">진행 중</option>
+          <option value="완료">완료</option>
+        </select>
+        
+        <select id="priorityFilter">
+          <option value="all">모든 우선순위</option>
+          <option value="낮음">낮음</option>
+          <option value="보통">보통</option>
+          <option value="높음">높음</option>
+        </select>
+      </div>
+      
+      <div id="tasks"></div>
+    </div>
+  </div>
+  
+  <div id="taskModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>태스크 수정</h2>
+      <form id="editTaskForm">
+        <input type="hidden" id="editTaskId">
+        
+        <div class="form-group">
+          <label for="editTitle">제목:</label>
+          <input type="text" id="editTitle" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="editDescription">설명:</label>
+          <textarea id="editDescription"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="editStatus">상태:</label>
+          <select id="editStatus">
+            <option value="할 일">할 일</option>
+            <option value="진행 중">진행 중</option>
+            <option value="완료">완료</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="editPriority">우선순위:</label>
+          <select id="editPriority">
+            <option value="낮음">낮음</option>
+            <option value="보통">보통</option>
+            <option value="높음">높음</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="editDueDate">마감일:</label>
+          <input type="date" id="editDueDate">
+        </div>
+        
+        <button type="submit">저장</button>
+      </form>
+    </div>
+  </div>
+  
+  <script src="app.js"></script>
+</body>
+</html>
