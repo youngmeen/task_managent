@@ -149,36 +149,36 @@ const Calendar = () => {
     const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
     
     return (
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
         <div className="grid grid-cols-7 gap-px border-b">
           {weekdays.map((day, index) => (
             <div 
               key={index} 
-              className={`text-center py-2 font-medium text-sm ${index === 0 ? 'text-red-500' : index === 6 ? 'text-blue-500' : 'text-gray-800'}`}
+              className={`text-center py-2 font-medium text-sm ${index === 0 ? 'text-red-500 dark:text-red-400' : index === 6 ? 'text-blue-500 dark:text-blue-400' : 'text-gray-800 dark:text-gray-300'}`}
             >
               {day}
             </div>
           ))}
         </div>
         
-        <div className="grid grid-cols-7 gap-px bg-gray-200">
+        <div className="grid grid-cols-7 gap-px bg-gray-200 dark:bg-gray-700">
           {weeks.map((week, weekIndex) => (
             <React.Fragment key={weekIndex}>
               {week.map((day, dayIndex) => (
                 <div 
                   key={`${weekIndex}-${dayIndex}`} 
-                  className={`min-h-32 bg-white p-1 ${!day.isCurrentMonth ? 'bg-gray-50 text-gray-400' : ''}`}
+                  className={`min-h-32 bg-white dark:bg-gray-800 p-1 ${!day.isCurrentMonth ? 'bg-gray-50 dark:bg-gray-900 text-gray-400 dark:text-gray-600' : ''}`}
                 >
                   <div className="flex justify-between">
                     <span 
                       className={`text-sm font-medium inline-flex h-6 w-6 items-center justify-center rounded-full
-                        ${day.isToday ? 'bg-indigo-600 text-white' : day.isCurrentMonth ? (dayIndex === 0 ? 'text-red-500' : dayIndex === 6 ? 'text-blue-500' : 'text-gray-900') : 'text-gray-400'}`}
+                        ${day.isToday ? 'bg-indigo-600 text-white' : day.isCurrentMonth ? (dayIndex === 0 ? 'text-red-500 dark:text-red-400' : dayIndex === 6 ? 'text-blue-500 dark:text-blue-400' : 'text-gray-900 dark:text-white') : 'text-gray-400 dark:text-gray-600'}`}
                     >
                       {day.date.getDate()}
                     </span>
                     {day.events.length > 0 && day.events.length <= 3 ? null : (
                       day.events.length > 3 ? (
-                        <span className="text-xs text-gray-500 bg-gray-100 px-1 rounded">
+                        <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-1 rounded">
                           +{day.events.length - 3}
                         </span>
                       ) : null
@@ -189,7 +189,7 @@ const Calendar = () => {
                     {day.events.slice(0, 3).map((event) => (
                       <div
                         key={event.id}
-                        className="px-1 py-0.5 text-xs rounded truncate cursor-pointer hover:bg-gray-50"
+                        className="px-1 py-0.5 text-xs rounded truncate cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700"
                         style={{ backgroundColor: `${event.typeColor}15`, borderLeft: `2px solid ${event.typeColor}` }}
                         onClick={() => handleEventClick(event)}
                       >
@@ -225,13 +225,13 @@ const Calendar = () => {
     const hours = Array.from({ length: 12 }, (_, i) => i + 8);
     
     return (
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
         <div className="grid grid-cols-8 gap-px border-b">
-          <div className="border-r"></div>
+          <div className="border-r bg-gray-50 dark:bg-gray-700"></div>
           {weekdays.map((day, index) => (
             <div 
               key={index} 
-              className={`text-center py-2 font-medium text-sm ${index === 0 ? 'text-red-500' : index === 6 ? 'text-blue-500' : 'text-gray-800'}`}
+              className={`text-center py-2 font-medium text-sm ${index === 0 ? 'text-red-500 dark:text-red-400' : index === 6 ? 'text-blue-500 dark:text-blue-400' : 'text-gray-800 dark:text-gray-300'}`}
             >
               <div>{day}</div>
               <div className={`text-xs mt-1 ${days[index].toDateString() === new Date().toDateString() ? 'bg-indigo-600 text-white rounded-full h-5 w-5 mx-auto flex items-center justify-center' : ''}`}>
@@ -241,10 +241,10 @@ const Calendar = () => {
           ))}
         </div>
         
-        <div className="grid grid-cols-8 gap-px divide-x overflow-y-auto max-h-96">
-          <div className="bg-gray-50">
+        <div className="grid grid-cols-8 gap-px divide-x overflow-y-auto max-h-96 dark:divide-gray-700">
+        <div className="bg-gray-50 dark:bg-gray-700">
             {hours.map(hour => (
-              <div key={hour} className="text-xs text-gray-500 text-right pr-2 h-12 pt-1">
+              <div key={hour} className="text-xs text-gray-500 dark:text-gray-400 text-right pr-2 h-12 pt-1">
                 {hour}:00
               </div>
             ))}
@@ -253,7 +253,7 @@ const Calendar = () => {
           {days.map((day, dayIndex) => (
             <div key={dayIndex} className="relative">
               {hours.map(hour => (
-                <div key={hour} className="border-t border-gray-200 h-12"></div>
+                <div key={hour} className="border-t border-gray-200 dark:border-gray-700 h-12"></div>
               ))}
               
               {/* 이벤트 렌더링 (간소화된 예시) */}
@@ -302,15 +302,15 @@ const Calendar = () => {
   };
   
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Header />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 font-baemin">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white font-baemin">
             캘린더
           </h1>
-          <p className="text-gray-600 mt-1">
+          <p className="text-gray-600 dark:text-gray-300 mt-1">
             일정과 이벤트를 관리하세요
           </p>
         </div>
@@ -320,22 +320,22 @@ const Calendar = () => {
           <div className="flex items-center space-x-2">
             <button 
               onClick={handlePrevMonth}
-              className="p-2 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+              className="p-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
             <button 
               onClick={handleNextMonth}
-              className="p-2 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+              className="p-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
-            <h2 className="text-xl font-semibold text-gray-900 font-baemin ml-2">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white font-baemin ml-2">
               {currentDate.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long' })}
             </h2>
             <button 
               onClick={handleToday}
-              className="ml-4 px-3 py-1 text-sm rounded-md bg-indigo-100 text-indigo-700 hover:bg-indigo-200"
+              className="ml-4 px-3 py-1 text-sm rounded-md bg-indigo-100 dark:bg-indigo-900 dark:bg-opacity-40 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-200 dark:hover:bg-indigo-800"
             >
               오늘
             </button>
@@ -344,26 +344,29 @@ const Calendar = () => {
           <div className="flex space-x-4">
             <div className="inline-flex rounded-md shadow-sm">
               <button 
-                className={`px-4 py-2 text-sm font-medium rounded-l-md border ${currentView === 'month' ? 'bg-indigo-50 border-indigo-300 text-indigo-700' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'}`}
+                className={`px-4 py-2 text-sm font-medium rounded-l-md border ${currentView === 'month' ? 'bg-indigo-50 dark:bg-indigo-900 dark:bg-opacity-50 border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300' : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'}`}
                 onClick={() => handleViewChange('month')}
               >
                 월
               </button>
               <button 
-                className={`px-4 py-2 text-sm font-medium border-t border-b ${currentView === 'week' ? 'bg-indigo-50 border-indigo-300 text-indigo-700' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'}`}
+                className={`px-4 py-2 text-sm font-medium border-t border-b ${currentView === 'week' ? 'bg-indigo-50 dark:bg-indigo-900 dark:bg-opacity-50 border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300' : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'}`}
                 onClick={() => handleViewChange('week')}
               >
                 주
               </button>
               <button 
-                className={`px-4 py-2 text-sm font-medium rounded-r-md border ${currentView === 'day' ? 'bg-indigo-50 border-indigo-300 text-indigo-700' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'}`}
+                className={`px-4 py-2 text-sm font-medium rounded-r-md border ${currentView === 'day' ? 'bg-indigo-50 dark:bg-indigo-900 dark:bg-opacity-50 border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300' : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'}`}
                 onClick={() => handleViewChange('day')}
               >
                 일
               </button>
             </div>
             
-            <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button 
+              onClick={() => navigate('/calendar/create')}
+              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
               <Plus className="h-4 w-4 mr-2" />
               일정 추가
             </button>
@@ -378,8 +381,8 @@ const Calendar = () => {
         </div>
         
         {/* 이벤트 타입 범례 */}
-        <div className="bg-white rounded-lg shadow p-4 mb-6">
-          <h3 className="text-sm font-medium text-gray-900 mb-3 font-baemin">일정 유형</h3>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 mb-6">
+          <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-3 font-baemin">일정 유형</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {eventTypeOptions.map((type) => (
               <div key={type.id} className="flex items-center">
@@ -387,7 +390,7 @@ const Calendar = () => {
                   className="h-3 w-3 rounded-full mr-2"
                   style={{ backgroundColor: type.color }}
                 ></span>
-                <span className="text-sm text-gray-600">{type.name}</span>
+                <span className="text-sm text-gray-600 dark:text-gray-300">{type.name}</span>
               </div>
             ))}
           </div>
@@ -397,12 +400,12 @@ const Calendar = () => {
       {/* 이벤트 상세 정보 모달 */}
       {showEventDetail && selectedEvent && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 overflow-hidden">
-            <div className="px-6 py-4 bg-gray-50 border-b flex justify-between items-center">
-              <h3 className="text-lg font-medium text-gray-900 font-baemin">일정 상세</h3>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full mx-4 overflow-hidden">
+            <div className="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-b dark:border-gray-600 flex justify-between items-center">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white font-baemin">일정 상세</h3>
               <button
                 onClick={handleCloseEventDetail}
-                className="text-gray-400 hover:text-gray-500"
+                className="text-gray-400 dark:text-gray-300 hover:text-gray-500 dark:hover:text-white"
               >
                 <span className="sr-only">닫기</span>
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -410,9 +413,9 @@ const Calendar = () => {
                 </svg>
               </button>
             </div>
-            <div className="px-6 py-4">
+            <div className="px-6 py-4 dark:text-gray-300">
               <div className="mb-4">
-                <h4 className="text-xl font-semibold text-gray-900 mb-1">{selectedEvent.title}</h4>
+                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">{selectedEvent.title}</h4>
                 <span
                   className="px-2 py-1 text-xs font-semibold rounded-full inline-block"
                   style={{ 
@@ -426,16 +429,16 @@ const Calendar = () => {
               
               {selectedEvent.description && (
                 <div className="mb-4">
-                  <p className="text-sm text-gray-600">{selectedEvent.description}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{selectedEvent.description}</p>
                 </div>
               )}
               
               <div className="space-y-2">
                 <div className="flex items-start">
-                  <Calendar className="h-5 w-5 text-gray-400 mr-2 mt-0.5" />
+                  <Calendar className="h-5 w-5 text-gray-400 dark:text-gray-500 mr-2 mt-0.5" />
                   <div>
-                    <p className="text-sm font-medium text-gray-900">날짜 및 시간</p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">날짜 및 시간</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       {formatDate(selectedEvent.startDate)}
                       {' '}
                       {formatTime(selectedEvent.startDate)} - {formatTime(selectedEvent.endDate)}
@@ -445,23 +448,23 @@ const Calendar = () => {
                 
                 {selectedEvent.location && (
                   <div className="flex items-start">
-                    <MapPin className="h-5 w-5 text-gray-400 mr-2 mt-0.5" />
+                    <MapPin className="h-5 w-5 text-gray-400 dark:text-gray-500 mr-2 mt-0.5" />
                     <div>
-                      <p className="text-sm font-medium text-gray-900">장소</p>
-                      <p className="text-sm text-gray-600">{selectedEvent.location}</p>
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">장소</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{selectedEvent.location}</p>
                     </div>
                   </div>
                 )}
               </div>
             </div>
-            <div className="px-6 py-3 bg-gray-50 border-t flex justify-end">
+            <div className="px-6 py-3 bg-gray-50 dark:bg-gray-700 border-t dark:border-gray-600 flex justify-end">
               <button
-                className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2"
+                className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2"
               >
                 수정
               </button>
               <button
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
               >
                 삭제
               </button>

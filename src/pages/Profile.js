@@ -583,12 +583,12 @@ const Profile = () => {
   }
   
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Header />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 font-baemin">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white font-baemin">
             내 프로필
           </h1>
         </div>
@@ -600,8 +600,8 @@ const Profile = () => {
               onClick={() => handleTabChange('profile')}
               className={`pb-3 px-1 border-b-2 font-baemin font-medium text-sm ${
                 activeTab === 'profile'
-                  ? 'border-indigo-500 text-indigo-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400'
+                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700'
               }`}
             >
               <User className="h-5 w-5 inline mr-1 -mt-0.5" />
@@ -611,8 +611,8 @@ const Profile = () => {
               onClick={() => handleTabChange('notifications')}
               className={`pb-3 px-1 border-b-2 font-baemin font-medium text-sm ${
                 activeTab === 'notifications'
-                  ? 'border-indigo-500 text-indigo-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400'
+                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700'
               }`}
             >
               <Bell className="h-5 w-5 inline mr-1 -mt-0.5" />
@@ -627,8 +627,8 @@ const Profile = () => {
               onClick={() => handleTabChange('activities')}
               className={`pb-3 px-1 border-b-2 font-baemin font-medium text-sm ${
                 activeTab === 'activities'
-                  ? 'border-indigo-500 text-indigo-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400'
+                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700'
               }`}
             >
               <Clock className="h-5 w-5 inline mr-1 -mt-0.5" />
@@ -638,8 +638,8 @@ const Profile = () => {
               onClick={() => handleTabChange('settings')}
               className={`pb-3 px-1 border-b-2 font-baemin font-medium text-sm ${
                 activeTab === 'settings'
-                  ? 'border-indigo-500 text-indigo-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400'
+                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700'
               }`}
             >
               <Settings className="h-5 w-5 inline mr-1 -mt-0.5" />

@@ -30,13 +30,13 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 font-baemin">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white font-baemin">
             업무 관리 시스템
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600 font-baemin">
+          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-300 font-baemin">
             계정으로 로그인하세요
           </p>
         </div>
@@ -50,7 +50,7 @@ const Login = () => {
                 name="username"
                 type="text"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-800 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="아이디"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -63,7 +63,7 @@ const Login = () => {
                 name="password"
                 type="password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-800 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="비밀번호"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -84,7 +84,7 @@ const Login = () => {
             </button>
           </div>
           
-          <div className="text-sm text-center text-gray-500">
+          <div className="text-sm text-center text-gray-500 dark:text-gray-400">
             <p>테스트 계정: test / 1234</p>
           </div>
         </form>

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, Plus, Filter, ChevronDown, Calendar, Tag, Clock } from 'lucide-react';
 import Header from '../components/Header';
 import { tasks, statusOptions, priorityOptions, tagOptions } from '../data/tasksData';
+import TaskModal from '../components/modals/TaskModal';
 
 const Tasks = () => {
   const [filteredTasks, setFilteredTasks] = useState([]);
@@ -15,6 +16,8 @@ const Tasks = () => {
   const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
   const [sortBy, setSortBy] = useState('dueDate'); // 기본 정렬 기준
   const [sortDirection, setSortDirection] = useState('asc'); // 기본 정렬 방향
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
   
   const navigate = useNavigate();
   
@@ -28,6 +31,14 @@ const Tasks = () => {
     
     // 초기 필터링 및 정렬 적용
     filterAndSortTasks();
+    
+    // URL 파라미터에서 '업무 추가' 모달을 열도록 요청하는 경우
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get('newTask') === 'true') {
+      openAddTaskModal();
+      // 파라미터 제거 (history 조작)
+      window.history.replaceState({}, document.title, '/tasks');
+    }
   }, [searchTerm, statusFilter, priorityFilter, tagFilter, sortBy, sortDirection, navigate]);
   
   const filterAndSortTasks = () => {
@@ -103,6 +114,38 @@ const Tasks = () => {
     setIsTagDropdownOpen(false);
   };
   
+  const openAddTaskModal = () => {
+    setSelectedTask(null);
+    setIsTaskModalOpen(true);
+  };
+  
+  const openEditTaskModal = (task) => {
+    setSelectedTask(task);
+    setIsTaskModalOpen(true);
+  };
+  
+  const handleTaskSave = (taskData) => {
+    // 실제 구현에서는 API 호출로 데이터 저장
+    console.log('Task data saved:', taskData);
+    
+    // 임시 로직: 클라이언트 사이드에서만 상태 업데이트
+    let updatedTasks = [...tasks];
+    
+    if (selectedTask) {
+      // 기존 업무 수정
+      const index = updatedTasks.findIndex(t => t.id === taskData.id);
+      if (index !== -1) {
+        updatedTasks[index] = taskData;
+      }
+    } else {
+      // 새 업무 추가
+      updatedTasks.push(taskData);
+    }
+    
+    // 필터링 및 정렬 적용
+    filterAndSortTasks();
+  };
+  
   const handleSort = (field) => {
     if (sortBy === field) {
       // 같은 필드로 정렬할 경우 정렬 방향 전환
@@ -130,15 +173,15 @@ const Tasks = () => {
   };
   
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Header />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 font-baemin">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white font-baemin">
             업무 관리
           </h1>
-          <p className="text-gray-600 mt-1">
+          <p className="text-gray-600 dark:text-gray-300 mt-1">
             모든 업무를 효율적으로 관리하고 추적하세요
           </p>
         </div>
@@ -152,7 +195,7 @@ const Tasks = () => {
             <input
               type="text"
               placeholder="업무 검색"
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               value={searchTerm}
               onChange={handleSearch}
             />
@@ -163,7 +206,7 @@ const Tasks = () => {
             <div className="relative">
               <button
                 onClick={() => setIsStatusDropdownOpen(!isStatusDropdownOpen)}
-                className={`flex items-center px-4 py-2 border rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${statusFilter ? 'bg-indigo-50 text-indigo-700 border-indigo-300' : 'bg-white text-gray-700 border-gray-300'}`}
+                className={`flex items-center px-4 py-2 border rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${statusFilter ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 border-indigo-300 dark:border-indigo-700' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'}`}
               >
                 <Filter className="h-4 w-4 mr-2" />
                 상태
@@ -171,13 +214,13 @@ const Tasks = () => {
               </button>
               
               {isStatusDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-10">
                   <div className="py-1">
                     {statusOptions.map((option) => (
                       <button
                         key={option.id}
                         onClick={() => handleStatusFilter(option.name)}
-                        className={`block w-full text-left px-4 py-2 text-sm ${statusFilter === option.name ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700'}`}
+                        className={`block w-full text-left px-4 py-2 text-sm ${statusFilter === option.name ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300' : 'text-gray-700 dark:text-gray-300'}`}
                       >
                         <div className="flex items-center">
                           <span
@@ -197,7 +240,7 @@ const Tasks = () => {
             <div className="relative">
               <button
                 onClick={() => setIsPriorityDropdownOpen(!isPriorityDropdownOpen)}
-                className={`flex items-center px-4 py-2 border rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${priorityFilter ? 'bg-indigo-50 text-indigo-700 border-indigo-300' : 'bg-white text-gray-700 border-gray-300'}`}
+                className={`flex items-center px-4 py-2 border rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${priorityFilter ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 border-indigo-300 dark:border-indigo-700' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'}`}
               >
                 <Clock className="h-4 w-4 mr-2" />
                 우선순위
@@ -205,13 +248,13 @@ const Tasks = () => {
               </button>
               
               {isPriorityDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-10">
                   <div className="py-1">
                     {priorityOptions.map((option) => (
                       <button
                         key={option.id}
                         onClick={() => handlePriorityFilter(option.name)}
-                        className={`block w-full text-left px-4 py-2 text-sm ${priorityFilter === option.name ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700'}`}
+                        className={`block w-full text-left px-4 py-2 text-sm ${priorityFilter === option.name ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300' : 'text-gray-700 dark:text-gray-300'}`}
                       >
                         <div className="flex items-center">
                           <span
@@ -231,7 +274,7 @@ const Tasks = () => {
             <div className="relative">
               <button
                 onClick={() => setIsTagDropdownOpen(!isTagDropdownOpen)}
-                className={`flex items-center px-4 py-2 border rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${tagFilter ? 'bg-indigo-50 text-indigo-700 border-indigo-300' : 'bg-white text-gray-700 border-gray-300'}`}
+                className={`flex items-center px-4 py-2 border rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${tagFilter ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 border-indigo-300 dark:border-indigo-700' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'}`}
               >
                 <Tag className="h-4 w-4 mr-2" />
                 태그
@@ -239,13 +282,13 @@ const Tasks = () => {
               </button>
               
               {isTagDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-10">
                   <div className="py-1 max-h-60 overflow-y-auto">
                     {tagOptions.map((tag) => (
                       <button
                         key={tag}
                         onClick={() => handleTagFilter(tag)}
-                        className={`block w-full text-left px-4 py-2 text-sm ${tagFilter === tag ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700'}`}
+                        className={`block w-full text-left px-4 py-2 text-sm ${tagFilter === tag ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300' : 'text-gray-700 dark:text-gray-300'}`}
                       >
                         {tag}
                       </button>
@@ -256,7 +299,10 @@ const Tasks = () => {
             </div>
             
             {/* 새 업무 추가 버튼 */}
-            <button className="flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button 
+              onClick={() => navigate('/tasks/create')}
+              className="flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
               <Plus className="h-4 w-4 mr-2" />
               새 업무
             </button>
@@ -264,14 +310,14 @@ const Tasks = () => {
         </div>
         
         {/* 업무 목록 테이블 */}
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
                   <th 
                     scope="col" 
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
                     onClick={() => handleSort('title')}
                   >
                     <div className="flex items-center">
@@ -285,7 +331,7 @@ const Tasks = () => {
                   </th>
                   <th 
                     scope="col" 
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
                     onClick={() => handleSort('status')}
                   >
                     <div className="flex items-center">
@@ -299,7 +345,7 @@ const Tasks = () => {
                   </th>
                   <th 
                     scope="col" 
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
                     onClick={() => handleSort('priority')}
                   >
                     <div className="flex items-center">
@@ -313,7 +359,7 @@ const Tasks = () => {
                   </th>
                   <th 
                     scope="col" 
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
                     onClick={() => handleSort('dueDate')}
                   >
                     <div className="flex items-center">
@@ -325,17 +371,17 @@ const Tasks = () => {
                       )}
                     </div>
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                     태그
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                 {filteredTasks.map((task) => (
-                  <tr key={task.id} className="hover:bg-gray-50 cursor-pointer">
+                  <tr key={task.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer" onClick={() => openEditTaskModal(task)}>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{task.title}</div>
-                      <div className="text-sm text-gray-500 truncate max-w-xs">{task.description}</div>
+                      <div className="text-sm font-medium text-gray-900 dark:text-white">{task.title}</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400 truncate max-w-xs">{task.description}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
@@ -360,14 +406,14 @@ const Tasks = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-500">{formatDate(task.dueDate)}</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">{formatDate(task.dueDate)}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex flex-wrap gap-1">
                         {task.tags.map((tag, index) => (
                           <span
                             key={index}
-                            className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
+                            className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300"
                           >
                             {tag}
                           </span>
@@ -379,7 +425,7 @@ const Tasks = () => {
                 
                 {filteredTasks.length === 0 && (
                   <tr>
-                    <td colSpan="5" className="px-6 py-10 text-center text-gray-500">
+                    <td colSpan="5" className="px-6 py-10 text-center text-gray-500 dark:text-gray-400">
                       {searchTerm || statusFilter || priorityFilter || tagFilter ? (
                         <div>
                           <p className="text-lg font-medium">검색 결과가 없습니다</p>
@@ -398,6 +444,14 @@ const Tasks = () => {
             </table>
           </div>
         </div>
+        
+        {/* 업무 추가/수정 모달 */}
+        <TaskModal 
+          isOpen={isTaskModalOpen} 
+          onClose={() => setIsTaskModalOpen(false)} 
+          onSave={handleTaskSave}
+          initialData={selectedTask}
+        />
       </div>
     </div>
   );

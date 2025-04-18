@@ -7,7 +7,10 @@
     "priority": "높음",
     "dueDate": "2025-04-18",
     "assignee": "김영민",
-    "tags": ["기획", "문서"],
+    "tags": [
+      "기획",
+      "문서"
+    ],
     "projectId": 1,
     "createdAt": "2025-04-10",
     "updatedAt": "2025-04-14"
@@ -20,7 +23,10 @@
     "priority": "중간",
     "dueDate": "2025-04-19",
     "assignee": "김영민",
-    "tags": ["회의", "준비"],
+    "tags": [
+      "회의",
+      "준비"
+    ],
     "projectId": 2,
     "createdAt": "2025-04-12",
     "updatedAt": "2025-04-12"
@@ -33,7 +39,10 @@
     "priority": "높음",
     "dueDate": "2025-04-20",
     "assignee": "김영민",
-    "tags": ["디자인", "검토"],
+    "tags": [
+      "디자인",
+      "검토"
+    ],
     "projectId": 1,
     "createdAt": "2025-04-13",
     "updatedAt": "2025-04-13"
@@ -46,7 +55,10 @@
     "priority": "낮음",
     "dueDate": "2025-04-21",
     "assignee": "김영민",
-    "tags": ["재무", "정산"],
+    "tags": [
+      "재무",
+      "정산"
+    ],
     "projectId": 3,
     "createdAt": "2025-04-14",
     "updatedAt": "2025-04-14"
@@ -59,7 +71,10 @@
     "priority": "중간",
     "dueDate": "2025-04-22",
     "assignee": "김영민",
-    "tags": ["개발", "코드"],
+    "tags": [
+      "개발",
+      "코드"
+    ],
     "projectId": 1,
     "createdAt": "2025-04-10",
     "updatedAt": "2025-04-15"
@@ -72,7 +87,10 @@
     "priority": "중간",
     "dueDate": "2025-04-15",
     "assignee": "김영민",
-    "tags": ["문서", "매뉴얼"],
+    "tags": [
+      "문서",
+      "매뉴얼"
+    ],
     "projectId": 2,
     "createdAt": "2025-04-08",
     "updatedAt": "2025-04-15"
@@ -85,7 +103,10 @@
     "priority": "높음",
     "dueDate": "2025-04-16",
     "assignee": "김영민",
-    "tags": ["미팅", "클라이언트"],
+    "tags": [
+      "미팅",
+      "클라이언트"
+    ],
     "projectId": 3,
     "createdAt": "2025-04-10",
     "updatedAt": "2025-04-16"
@@ -98,7 +119,10 @@
     "priority": "중간",
     "dueDate": "2025-04-14",
     "assignee": "김영민",
-    "tags": ["테스트", "품질"],
+    "tags": [
+      "테스트",
+      "품질"
+    ],
     "projectId": 1,
     "createdAt": "2025-04-07",
     "updatedAt": "2025-04-14"
@@ -111,7 +135,10 @@
     "priority": "낮음",
     "dueDate": "2025-04-23",
     "assignee": "김영민",
-    "tags": ["디자인", "문서"],
+    "tags": [
+      "디자인",
+      "문서"
+    ],
     "projectId": 2,
     "createdAt": "2025-04-15",
     "updatedAt": "2025-04-15"
@@ -124,7 +151,10 @@
     "priority": "높음",
     "dueDate": "2025-04-21",
     "assignee": "김영민",
-    "tags": ["개발", "최적화"],
+    "tags": [
+      "개발",
+      "최적화"
+    ],
     "projectId": 1,
     "createdAt": "2025-04-12",
     "updatedAt": "2025-04-16"
@@ -137,7 +167,10 @@
     "priority": "중간",
     "dueDate": "2025-04-12",
     "assignee": "김영민",
-    "tags": ["교육", "인사"],
+    "tags": [
+      "교육",
+      "인사"
+    ],
     "projectId": 3,
     "createdAt": "2025-04-05",
     "updatedAt": "2025-04-12"
@@ -150,7 +183,10 @@
     "priority": "중간",
     "dueDate": "2025-04-30",
     "assignee": "김영민",
-    "tags": ["보고서", "월간"],
+    "tags": [
+      "보고서",
+      "월간"
+    ],
     "projectId": 3,
     "createdAt": "2025-04-16",
     "updatedAt": "2025-04-16"
@@ -163,7 +199,10 @@
     "priority": "높음",
     "dueDate": "2025-04-25",
     "assignee": "김영민",
-    "tags": ["개발", "서버"],
+    "tags": [
+      "개발",
+      "서버"
+    ],
     "projectId": 2,
     "createdAt": "2025-04-08",
     "updatedAt": "2025-04-15"
@@ -176,7 +215,10 @@
     "priority": "높음",
     "dueDate": "2025-04-26",
     "assignee": "김영민",
-    "tags": ["보안", "점검"],
+    "tags": [
+      "보안",
+      "점검"
+    ],
     "projectId": 1,
     "createdAt": "2025-04-15",
     "updatedAt": "2025-04-15"
@@ -189,7 +231,10 @@
     "priority": "중간",
     "dueDate": "2025-04-11",
     "assignee": "김영민",
-    "tags": ["마케팅", "회의"],
+    "tags": [
+      "마케팅",
+      "회의"
+    ],
     "projectId": 3,
     "createdAt": "2025-04-08",
     "updatedAt": "2025-04-11"
