@@ -1,19 +1,20 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { getLocalStorage, setLocalStorage } from '../utils/storageUtils';
 
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   // 로컬 스토리지에서 테마 설정 불러오기 (기본값: light)
   const [theme, setTheme] = useState(() => {
-    const savedTheme = localStorage.getItem('theme');
-    return savedTheme || 'light';
+    const savedTheme = getLocalStorage('theme', 'light');
+    return savedTheme;
   });
 
   // 테마 변경 함수
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
+    setLocalStorage('theme', newTheme);
   };
 
   // 테마에 따라 HTML 요소의 클래스를 업데이트

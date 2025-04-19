@@ -4,6 +4,7 @@ import { Search, Plus, Filter, ChevronDown, Calendar, Tag, Clock } from 'lucide-
 import Header from '../components/Header';
 import { tasks, statusOptions, priorityOptions, tagOptions } from '../data/tasksData';
 import TaskModal from '../components/modals/TaskModal';
+import Button from '../components/common/Button';
 
 const Tasks = () => {
   const [filteredTasks, setFilteredTasks] = useState([]);
@@ -40,6 +41,23 @@ const Tasks = () => {
       window.history.replaceState({}, document.title, '/tasks');
     }
   }, [searchTerm, statusFilter, priorityFilter, tagFilter, sortBy, sortDirection, navigate]);
+  
+  // 드롭다운 외부 클릭 감지를 위한 이벤트 핸들러
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isStatusDropdownOpen || isPriorityDropdownOpen || isTagDropdownOpen) {
+        // 드롭다운 외부 클릭 시 모든 드롭다운 닫기
+        setIsStatusDropdownOpen(false);
+        setIsPriorityDropdownOpen(false);
+        setIsTagDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isStatusDropdownOpen, isPriorityDropdownOpen, isTagDropdownOpen]);
   
   const filterAndSortTasks = () => {
     let result = [...tasks];
@@ -176,45 +194,51 @@ const Tasks = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Header />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white font-baemin">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
+        <div className="mb-4 sm:mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white font-baemin">
             업무 관리
           </h1>
-          <p className="text-gray-600 dark:text-gray-300 mt-1">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mt-1">
             모든 업무를 효율적으로 관리하고 추적하세요
           </p>
         </div>
         
         {/* 검색 및 필터 */}
-        <div className="mb-6 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-          <div className="relative flex-grow">
+        <div className="mb-6 flex flex-col space-y-4">
+          {/* 검색 입력 */}
+          <div className="relative w-full">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-400" />
             </div>
             <input
               type="text"
               placeholder="업무 검색"
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="block w-full pl-10 pr-4 py-3 text-base border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               value={searchTerm}
               onChange={handleSearch}
             />
           </div>
           
-          <div className="flex space-x-2">
+          {/* 필터 버튼 그룹 */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {/* 상태 필터 */}
-            <div className="relative">
+            <div className="relative" onClick={(e) => e.stopPropagation()}>
               <button
-                onClick={() => setIsStatusDropdownOpen(!isStatusDropdownOpen)}
-                className={`flex items-center px-4 py-2 border rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${statusFilter ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 border-indigo-300 dark:border-indigo-700' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'}`}
+                onClick={() => {
+                  setIsStatusDropdownOpen(!isStatusDropdownOpen);
+                  setIsPriorityDropdownOpen(false);
+                  setIsTagDropdownOpen(false);
+                }}
+                className={`flex items-center w-full justify-center px-3 py-2 border rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${statusFilter ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 border-indigo-300 dark:border-indigo-700' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'}`}
               >
-                <Filter className="h-4 w-4 mr-2" />
-                상태
+                <Filter className="h-4 w-4 mr-1" />
+                <span className="truncate">상태</span>
                 <ChevronDown className="h-4 w-4 ml-1" />
               </button>
               
               {isStatusDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-10">
+                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-20">
                   <div className="py-1">
                     {statusOptions.map((option) => (
                       <button
@@ -237,18 +261,22 @@ const Tasks = () => {
             </div>
             
             {/* 우선순위 필터 */}
-            <div className="relative">
+            <div className="relative" onClick={(e) => e.stopPropagation()}>
               <button
-                onClick={() => setIsPriorityDropdownOpen(!isPriorityDropdownOpen)}
-                className={`flex items-center px-4 py-2 border rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${priorityFilter ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 border-indigo-300 dark:border-indigo-700' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'}`}
+                onClick={() => {
+                  setIsPriorityDropdownOpen(!isPriorityDropdownOpen);
+                  setIsStatusDropdownOpen(false);
+                  setIsTagDropdownOpen(false);
+                }}
+                className={`flex items-center w-full justify-center px-3 py-2 border rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${priorityFilter ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 border-indigo-300 dark:border-indigo-700' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'}`}
               >
-                <Clock className="h-4 w-4 mr-2" />
-                우선순위
+                <Clock className="h-4 w-4 mr-1" />
+                <span className="truncate">우선순위</span>
                 <ChevronDown className="h-4 w-4 ml-1" />
               </button>
               
               {isPriorityDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-10">
+                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-20">
                   <div className="py-1">
                     {priorityOptions.map((option) => (
                       <button
@@ -271,18 +299,22 @@ const Tasks = () => {
             </div>
             
             {/* 태그 필터 */}
-            <div className="relative">
+            <div className="relative" onClick={(e) => e.stopPropagation()}>
               <button
-                onClick={() => setIsTagDropdownOpen(!isTagDropdownOpen)}
-                className={`flex items-center px-4 py-2 border rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${tagFilter ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 border-indigo-300 dark:border-indigo-700' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'}`}
+                onClick={() => {
+                  setIsTagDropdownOpen(!isTagDropdownOpen);
+                  setIsStatusDropdownOpen(false);
+                  setIsPriorityDropdownOpen(false);
+                }}
+                className={`flex items-center w-full justify-center px-3 py-2 border rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${tagFilter ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 border-indigo-300 dark:border-indigo-700' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'}`}
               >
-                <Tag className="h-4 w-4 mr-2" />
-                태그
+                <Tag className="h-4 w-4 mr-1" />
+                <span className="truncate">태그</span>
                 <ChevronDown className="h-4 w-4 ml-1" />
               </button>
               
               {isTagDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-10">
+                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-20">
                   <div className="py-1 max-h-60 overflow-y-auto">
                     {tagOptions.map((tag) => (
                       <button
@@ -299,19 +331,96 @@ const Tasks = () => {
             </div>
             
             {/* 새 업무 추가 버튼 */}
-            <button 
+            <Button 
               onClick={() => navigate('/tasks/create')}
-              className="flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              variant="primary"
+              size="md"
+              leftIcon={<Plus className="h-4 w-4" />}
             >
-              <Plus className="h-4 w-4 mr-2" />
-              새 업무
-            </button>
+              <span className="truncate">새 업무</span>
+            </Button>
           </div>
         </div>
         
-        {/* 업무 목록 테이블 */}
+        {/* 업무 목록 */}
         <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
-          <div className="overflow-x-auto">
+          {/* 모바일 카드 뷰 (sm 이하에서만 보임) */}
+          <div className="block sm:hidden">
+            {filteredTasks.length > 0 ? (
+              <div className="divide-y divide-gray-200 dark:divide-gray-700">
+                {filteredTasks.map((task) => (
+                  <div 
+                    key={task.id}
+                    className="p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+                    onClick={() => openEditTaskModal(task)}
+                  >
+                    <div className="flex justify-between items-start mb-1">
+                      <h3 className="text-sm font-medium text-gray-900 dark:text-white">{task.title}</h3>
+                      <div className="flex space-x-1">
+                        <span
+                          className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                          style={{ 
+                            backgroundColor: `${getStatusColor(task.status)}20`, 
+                            color: getStatusColor(task.status) 
+                          }}
+                        >
+                          {task.status}
+                        </span>
+                        <span
+                          className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                          style={{ 
+                            backgroundColor: `${getPriorityColor(task.priority)}20`, 
+                            color: getPriorityColor(task.priority) 
+                          }}
+                        >
+                          {task.priority}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate mb-2">{task.description}</p>
+                    <div className="flex justify-between items-center">
+                      <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                        <Calendar className="h-3 w-3 mr-1" />
+                        {formatDate(task.dueDate)}
+                      </div>
+                      <div className="flex flex-wrap gap-1 justify-end">
+                        {task.tags.slice(0, 2).map((tag, index) => (
+                          <span
+                            key={index}
+                            className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                        {task.tags.length > 2 && (
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
+                            +{task.tags.length - 2}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="py-8 px-4 text-center text-gray-500 dark:text-gray-400">
+                {searchTerm || statusFilter || priorityFilter || tagFilter ? (
+                  <div>
+                    <p className="text-lg font-medium">검색 결과가 없습니다</p>
+                    <p className="text-sm mt-1">다른 검색어나 필터를 시도해보세요</p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-lg font-medium">등록된 업무가 없습니다</p>
+                    <p className="text-sm mt-1">새 업무를 추가해보세요</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+          
+          {/* 태블릿/데스크탑 테이블 뷰 (sm 이상에서만 보임) */}
+          <div className="hidden sm:block overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
@@ -377,53 +486,53 @@ const Tasks = () => {
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                {filteredTasks.map((task) => (
-                  <tr key={task.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer" onClick={() => openEditTaskModal(task)}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900 dark:text-white">{task.title}</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400 truncate max-w-xs">{task.description}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
-                        style={{ 
-                          backgroundColor: `${getStatusColor(task.status)}20`, 
-                          color: getStatusColor(task.status) 
-                        }}
-                      >
-                        {task.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
-                        style={{ 
-                          backgroundColor: `${getPriorityColor(task.priority)}20`, 
-                          color: getPriorityColor(task.priority) 
-                        }}
-                      >
-                        {task.priority}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-500 dark:text-gray-400">{formatDate(task.dueDate)}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex flex-wrap gap-1">
-                        {task.tags.map((tag, index) => (
-                          <span
-                            key={index}
-                            className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-                
-                {filteredTasks.length === 0 && (
+                {filteredTasks.length > 0 ? (
+                  filteredTasks.map((task) => (
+                    <tr key={task.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer" onClick={() => openEditTaskModal(task)}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-gray-900 dark:text-white">{task.title}</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400 truncate max-w-xs">{task.description}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span
+                          className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                          style={{ 
+                            backgroundColor: `${getStatusColor(task.status)}20`, 
+                            color: getStatusColor(task.status) 
+                          }}
+                        >
+                          {task.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span
+                          className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                          style={{ 
+                            backgroundColor: `${getPriorityColor(task.priority)}20`, 
+                            color: getPriorityColor(task.priority) 
+                          }}
+                        >
+                          {task.priority}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-500 dark:text-gray-400">{formatDate(task.dueDate)}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex flex-wrap gap-1">
+                          {task.tags.map((tag, index) => (
+                            <span
+                              key={index}
+                              className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
                   <tr>
                     <td colSpan="5" className="px-6 py-10 text-center text-gray-500 dark:text-gray-400">
                       {searchTerm || statusFilter || priorityFilter || tagFilter ? (

@@ -399,16 +399,30 @@ const Calendar = () => {
       
       {/* 이벤트 상세 정보 모달 */}
       {showEventDetail && selectedEvent && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full mx-4 overflow-hidden">
+        <>
+          {/* 배경 오버레이 - 클릭 시 모달 닫힘 */}
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-30 z-40"
+            onClick={handleCloseEventDetail}
+          ></div>
+          
+          {/* 팝업 모달 */}
+          <div 
+            className="fixed z-50 bg-white dark:bg-gray-800 rounded-lg shadow-2xl max-w-md w-full overflow-hidden"
+            style={{
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)'
+            }}
+          >
             <div className="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-b dark:border-gray-600 flex justify-between items-center">
               <h3 className="text-lg font-medium text-gray-900 dark:text-white font-baemin">일정 상세</h3>
               <button
                 onClick={handleCloseEventDetail}
-                className="text-gray-400 dark:text-gray-300 hover:text-gray-500 dark:hover:text-white"
+                className="text-gray-400 dark:text-gray-300 hover:text-gray-500 dark:hover:text-white rounded-full p-1 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
               >
                 <span className="sr-only">닫기</span>
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -435,7 +449,7 @@ const Calendar = () => {
               
               <div className="space-y-2">
                 <div className="flex items-start">
-                  <Calendar className="h-5 w-5 text-gray-400 dark:text-gray-500 mr-2 mt-0.5" />
+                  <Clock className="h-5 w-5 text-gray-400 dark:text-gray-500 mr-2 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-gray-900 dark:text-white">날짜 및 시간</p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -448,10 +462,10 @@ const Calendar = () => {
                 
                 {selectedEvent.location && (
                   <div className="flex items-start">
-                    <MapPin className="h-5 w-5 text-gray-400 dark:text-gray-500 mr-2 mt-0.5" />
+                    <MapPin className="h-5 w-5 text-gray-400 dark:text-gray-500 mr-2 mt-0.5 flex-shrink-0" />
                     <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">장소</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{selectedEvent.location}</p>
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">장소</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{selectedEvent.location}</p>
                     </div>
                   </div>
                 )}
@@ -470,7 +484,7 @@ const Calendar = () => {
               </button>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Calendar } from 'lucide-react';
 import { projectStatusOptions, projectPriorityOptions, teamMembers } from '../../data/projectsData';
+import Button from '../common/Button';
 
 const ProjectModal = ({ isOpen, onClose, onSave, initialData = null }) => {
   const [formData, setFormData] = useState({
@@ -277,19 +278,19 @@ const ProjectModal = ({ isOpen, onClose, onSave, initialData = null }) => {
               
               {/* 버튼 */}
               <div className="flex justify-end pt-2">
-                <button
-                  type="button"
-                  className="mr-2 px-4 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                <Button
+                  variant="secondary"
                   onClick={onClose}
+                  className="mr-2"
                 >
                   취소
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="primary"
                   type="submit"
-                  className="px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   저장
-                </button>
+                </Button>
               </div>
             </div>
           </form>

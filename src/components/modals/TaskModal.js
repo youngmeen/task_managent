@@ -32,6 +32,19 @@ const TaskModal = ({ isOpen, onClose, onSave, initialData = null }) => {
       });
     }
   }, [initialData, isOpen]);
+
+  // 모달이 열렸을 때 스크롤 막기
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -59,12 +72,19 @@ const TaskModal = ({ isOpen, onClose, onSave, initialData = null }) => {
     onClose();
   };
   
+  // 모달 외부 클릭 시 태그 선택기 닫기
+  const handleOutsideClick = (e) => {
+    if (showTagSelector) {
+      setShowTagSelector(false);
+    }
+  };
+  
   // 모달이 닫혀있으면 아무것도 렌더링하지 않음
   if (!isOpen) return null;
   
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div className="fixed inset-0 z-50 overflow-y-auto" onClick={handleOutsideClick}>
+      <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true" onClick={onClose}>
           <div className="absolute inset-0 bg-gray-500 bg-opacity-75"></div>
         </div>
@@ -72,24 +92,24 @@ const TaskModal = ({ isOpen, onClose, onSave, initialData = null }) => {
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
         
         <div 
-          className="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+          className="inline-block w-full align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
           onClick={e => e.stopPropagation()}
         >
-          <div className="flex justify-between items-center px-6 pt-5 pb-2">
+          <div className="sticky top-0 z-10 flex justify-between items-center px-4 sm:px-6 pt-4 pb-2 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
             <h3 className="text-lg font-medium text-gray-900 dark:text-white font-baemin">
               {initialData ? '업무 수정' : '새 업무 추가'}
             </h3>
             <button
               type="button"
-              className="text-gray-400 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-200"
+              className="text-gray-400 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-200 p-1"
               onClick={onClose}
             >
               <X className="h-6 w-6" />
             </button>
           </div>
           
-          <form onSubmit={handleSubmit} className="px-6 pb-6">
-            <div className="space-y-4">
+          <div className="max-h-[80vh] overflow-y-auto">
+            <form onSubmit={handleSubmit} className="px-4 sm:px-6 py-4 space-y-4">
               {/* 업무명 */}
               <div>
                 <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">업무명</label>
@@ -118,7 +138,7 @@ const TaskModal = ({ isOpen, onClose, onSave, initialData = null }) => {
               </div>
               
               {/* 상태 및 우선순위 */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="status" className="block text-sm font-medium text-gray-700 dark:text-gray-300">상태</label>
                   <select
@@ -174,7 +194,10 @@ const TaskModal = ({ isOpen, onClose, onSave, initialData = null }) => {
                 <div className="mt-1 relative">
                   <div
                     className="min-h-[38px] px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm cursor-pointer flex flex-wrap gap-1 bg-white dark:bg-gray-700"
-                    onClick={() => setShowTagSelector(!showTagSelector)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowTagSelector(!showTagSelector);
+                    }}
                   >
                     {formData.tags.length > 0 ? (
                       formData.tags.map((tag, index) => (
@@ -191,7 +214,7 @@ const TaskModal = ({ isOpen, onClose, onSave, initialData = null }) => {
                   </div>
                   
                   {showTagSelector && (
-                    <div className="absolute z-10 mt-1 w-full bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-600 rounded-md py-1 max-h-60 overflow-y-auto">
+                    <div className="absolute z-10 mt-1 w-full bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-600 rounded-md py-1 max-h-40 overflow-y-auto">
                       {tagOptions.map((tag) => (
                         <div
                           key={tag}
@@ -208,6 +231,7 @@ const TaskModal = ({ isOpen, onClose, onSave, initialData = null }) => {
                             checked={formData.tags.includes(tag)}
                             className="h-4 w-4 text-indigo-600 dark:text-indigo-400 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 rounded"
                             onChange={() => {}}
+                            onClick={(e) => e.stopPropagation()}
                           />
                           <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">{tag}</span>
                         </div>
@@ -216,25 +240,28 @@ const TaskModal = ({ isOpen, onClose, onSave, initialData = null }) => {
                   )}
                 </div>
               </div>
-              
-              {/* 버튼 */}
-              <div className="flex justify-end pt-2">
-                <button
-                  type="button"
-                  className="mr-2 px-4 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  onClick={onClose}
-                >
-                  취소
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  저장
-                </button>
-              </div>
+            </form>
+          </div>
+          
+          {/* 버튼 - 하단 고정 */}
+          <div className="sticky bottom-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-4 sm:px-6 py-3">
+            <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 sm:gap-3">
+              <button
+                type="button"
+                className="w-full sm:w-auto px-4 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={onClose}
+              >
+                취소
+              </button>
+              <button
+                type="button"
+                onClick={handleSubmit}
+                className="w-full sm:w-auto px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                저장
+              </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

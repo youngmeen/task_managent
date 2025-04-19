@@ -4,6 +4,9 @@ import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tool
 import { Clock, CheckSquare, AlertTriangle, Clock3, Plus } from 'lucide-react';
 import { tasksByStatus, priorityData, recentActivity, upcomingTasks, projectProgress } from '../data/sampleData';
 import Header from '../components/Header';
+import { formatDate } from '../utils/dateUtils';
+import { formatPercent } from '../utils/formatUtils';
+import { getSessionStorage } from '../utils/storageUtils';
 
 const Dashboard = () => {
   const [greeting, setGreeting] = useState('');
@@ -13,13 +16,12 @@ const Dashboard = () => {
   
   useEffect(() => {
     // 로그인 상태 확인
-    const userString = sessionStorage.getItem('user');
-    if (!userString) {
+    const user = getSessionStorage('user');
+    if (!user) {
       navigate('/login');
       return;
     }
     
-    const user = JSON.parse(userString);
     setUserName(user.name);
     
     // 시간대별 인사말 설정
@@ -141,7 +143,7 @@ const Dashboard = () => {
         
         {/* 그래프와 차트 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 sm:p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 sm:p-6 transition duration-300 ease-in-out hover:shadow-lg hover:bg-gray-50 dark:hover:bg-gray-750">
             <h2 className="text-base sm:text-lg font-medium text-gray-900 dark:text-white mb-3 sm:mb-4 font-baemin">업무 현황</h2>
             <div className="h-48 sm:h-64">
               <ResponsiveContainer width="100%" height="100%">
@@ -154,20 +156,33 @@ const Dashboard = () => {
                     outerRadius={80}
                     fill="#8884d8"
                     dataKey="value"
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    label={({ name, percent }) => `${name} ${formatPercent(percent)}`}
                   >
                     {tasksByStatus.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip />
-                  <Legend />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)', 
+                      borderRadius: '6px',
+                      border: '1px solid #e2e8f0',
+                      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+                      padding: '8px'
+                    }}
+                  />
+                  <Legend
+                    wrapperStyle={{
+                      paddingTop: '12px'
+                    }}
+                    onClick={(data) => console.log(data)}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
           </div>
           
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 sm:p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 sm:p-6 transition duration-300 ease-in-out hover:shadow-lg hover:bg-gray-50 dark:hover:bg-gray-750">
             <h2 className="text-base sm:text-lg font-medium text-gray-900 dark:text-white mb-3 sm:mb-4 font-baemin">최근 활동</h2>
             <div className="h-48 sm:h-64">
               <ResponsiveContainer width="100%" height="100%">
@@ -178,9 +193,29 @@ const Dashboard = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="date" />
                   <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="tasks" stroke="#3b82f6" activeDot={{ r: 8 }} />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)', 
+                      borderRadius: '6px',
+                      border: '1px solid #e2e8f0',
+                      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+                      padding: '8px' 
+                    }}
+                    cursor={{ strokeDasharray: '3 3', stroke: '#6366f1' }}
+                  />
+                  <Legend 
+                    wrapperStyle={{
+                      paddingTop: '12px'
+                    }}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="tasks" 
+                    stroke="#3b82f6" 
+                    strokeWidth={2}
+                    activeDot={{ r: 8, fill: '#3b82f6', stroke: '#fff', strokeWidth: 2 }} 
+                    dot={{ r: 4, fill: '#3b82f6', stroke: '#fff', strokeWidth: 1 }}
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </div>
