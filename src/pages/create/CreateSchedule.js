@@ -49,7 +49,6 @@ const CreateSchedule = () => {
 		const userString = sessionStorage.getItem('user');
 		if (!userString) {
 			navigate('/login');
-			return;
 		}
 	}, [navigate]);
 
@@ -99,21 +98,21 @@ const CreateSchedule = () => {
 		<div className={`min-h-screen ${theme === 'dark' ? 'bg-dark-primary' : 'bg-gray-50'}`}>
 			<Header/>
 
-			<div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-				<div className="mb-6 flex items-center">
+			<div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
+				<div className="mb-4 sm:mb-6 flex items-center">
 					<button
 						onClick={() => navigate(-1)}
 						className={`mr-4 p-2 rounded-full ${theme === 'dark' ? 'hover:bg-dark-secondary text-dark-text-primary' : 'hover:bg-gray-200 text-gray-600'} transition-colors`}
 					>
 						<ChevronLeft className="h-5 w-5"/>
 					</button>
-					<h1 className={`text-3xl font-bold ${theme === 'dark' ? 'text-dark-text-primary' : 'text-gray-900'} font-baemin`}>
+					<h1 className={`text-2xl sm:text-3xl font-bold ${theme === 'dark' ? 'text-dark-text-primary' : 'text-gray-900'} font-baemin`}>
 						새 일정 추가
 					</h1>
 				</div>
 
 				<div className={`${theme === 'dark' ? 'bg-dark-secondary shadow-dark' : 'bg-white shadow'} overflow-hidden sm:rounded-lg`}>
-					<form onSubmit={handleSubmit} className="p-6 space-y-6">
+					<form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 sm:space-y-6">
 						{/* 일정명 */}
 						<div>
 							<label htmlFor="title" className={`block text-sm font-medium ${theme === 'dark' ? 'text-dark-text-primary' : 'text-gray-700'}`}>일정명</label>
@@ -155,7 +154,7 @@ const CreateSchedule = () => {
 						</div>
 
 						{/* 시작일시/종료일시 */}
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 							<div>
 								<label htmlFor="startDate" className={`block text-sm font-medium ${theme === 'dark' ? 'text-dark-text-primary' : 'text-gray-700'}`}>시작
 									일자</label>
@@ -330,7 +329,7 @@ const CreateSchedule = () => {
 						{/* 색상 */}
 						<div>
 							<label className={`block text-sm font-medium ${theme === 'dark' ? 'text-dark-text-primary' : 'text-gray-700'} mb-2`}>일정 색상</label>
-							<div className="flex flex-wrap gap-2">
+							<div className="flex flex-wrap gap-3">
 								{colorOptions.map((colorOption) => (
 									<button
 										key={colorOption.id}
@@ -345,17 +344,17 @@ const CreateSchedule = () => {
 						</div>
 
 						{/* 버튼 */}
-						<div className="flex justify-end pt-5">
+						<div className="flex flex-col sm:flex-row sm:justify-end gap-3 pt-5">
 							<button
 								type="button"
 								onClick={() => navigate('/calendar')}
-								className={`mr-3 px-4 py-2 border text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${theme === 'dark' ? 'border-gray-600 text-dark-text-primary bg-dark-secondary shadow-dark-sm hover:bg-gray-700' : 'border-gray-300 text-gray-700 bg-white shadow-sm hover:bg-gray-50'}`}
+								className={`w-full sm:w-auto sm:mr-3 px-4 py-2 border text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${theme === 'dark' ? 'border-gray-600 text-dark-text-primary bg-dark-secondary shadow-dark-sm hover:bg-gray-700' : 'border-gray-300 text-gray-700 bg-white shadow-sm hover:bg-gray-50'}`}
 							>
 								취소
 							</button>
 							<button
 								type="submit"
-								className={`px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${theme === 'dark' ? 'bg-indigo-700 hover:bg-indigo-800 shadow-dark-sm' : 'bg-indigo-600 hover:bg-indigo-700 shadow-sm'}`}
+								className={`w-full sm:w-auto px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${theme === 'dark' ? 'bg-indigo-700 hover:bg-indigo-800 shadow-dark-sm' : 'bg-indigo-600 hover:bg-indigo-700 shadow-sm'}`}
 							>
 								저장
 							</button>

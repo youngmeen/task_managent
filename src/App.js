@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import ThemeToggle from './components/common/ThemeToggle';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
