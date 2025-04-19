@@ -1,0 +1,137 @@
+/* Card.css - 카드 컴포넌트 스타일 */
+
+.card {
+  background-color: var(--card-bg, #ffffff);
+  border-radius: var(--card-border-radius, 8px);
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* 패딩 변형 */
+.card--padding-none {
+  padding: 0;
+}
+
+.card--padding-sm {
+  padding: 12px;
+}
+
+.card--padding-md {
+  padding: 16px;
+}
+
+.card--padding-lg {
+  padding: 24px;
+}
+
+/* 스타일 변형 */
+.card--variant-default {
+  border: none;
+}
+
+.card--variant-outlined {
+  border: 1px solid var(--card-border-color, rgba(0, 0, 0, 0.12));
+}
+
+.card--variant-flat {
+  border: none;
+  background-color: var(--card-flat-bg, #f5f5f5);
+}
+
+/* 그림자 깊이 */
+.card--elevation-0 {
+  box-shadow: none;
+}
+
+.card--elevation-1 {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.card--elevation-2 {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.card--elevation-3 {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card--elevation-4 {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.card--elevation-5 {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* 호버 효과 */
+.card--hoverable:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+/* 클릭 가능 */
+.card--clickable {
+  cursor: pointer;
+}
+
+.card--clickable:active {
+  transform: translateY(1px);
+}
+
+/* 헤더 스타일 */
+.card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.card__header-content {
+  flex: 1;
+}
+
+.card__title {
+  margin: 0;
+  font-size: var(--card-title-size, 1.1rem);
+  font-weight: 600;
+  color: var(--card-title-color, #1a1a1a);
+  line-height: 1.4;
+}
+
+.card__subtitle {
+  margin: 4px 0 0 0;
+  font-size: var(--card-subtitle-size, 0.9rem);
+  color: var(--card-subtitle-color, #666666);
+  font-weight: 400;
+}
+
+.card__header-right {
+  margin-left: 16px;
+}
+
+/* 콘텐츠 영역 */
+.card__content {
+  flex: 1;
+}
+
+/* 푸터 스타일 */
+.card__footer {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--card-divider-color, rgba(0, 0, 0, 0.08));
+}
+
+/* 다크 모드 지원 (옵션) */
+@media (prefers-color-scheme: dark) {
+  .card {
+    --card-bg: #2a2a2a;
+    --card-flat-bg: #333333;
+    --card-border-color: rgba(255, 255, 255, 0.12);
+    --card-title-color: #ffffff;
+    --card-subtitle-color: #aaaaaa;
+    --card-divider-color: rgba(255, 255, 255, 0.08);
+  }
+}
