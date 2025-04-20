@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Plus, Filter, ChevronDown, Users, Calendar, ChevronRight } from 'lucide-react';
-import Header from '../components/layouts/Header';
-import { projects, projectStatusOptions, projectPriorityOptions, teamMembers } from '../data/projectsData';
-import ProjectModal from '../components/projects/ProjectModal';
+import Header from '../../components/layouts/Header';
+import { projects, projectStatusOptions, projectPriorityOptions } from '../../data/projectsData';
+import ProjectModal from '../../components/projects/ProjectModal';
 
 const Projects = () => {
   const [filteredProjects, setFilteredProjects] = useState([]);
@@ -39,25 +39,25 @@ const Projects = () => {
   
   const filterProjects = () => {
     let result = [...projects];
-    
+
     // 검색어 필터링
     if (searchTerm) {
-      result = result.filter(project => 
+      result = result.filter(project =>
         project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         project.description.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    
+
     // 상태 필터링
     if (statusFilter) {
       result = result.filter(project => project.status === statusFilter);
     }
-    
+
     // 우선순위 필터링
     if (priorityFilter) {
       result = result.filter(project => project.priority === priorityFilter);
     }
-    
+
     setFilteredProjects(result);
   };
   

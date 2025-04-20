@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Plus, Filter, ChevronDown, Calendar, Tag, Clock } from 'lucide-react';
-import Header from '../components/layouts/Header';
-import { tasks, statusOptions, priorityOptions, tagOptions } from '../data/tasksData';
-import TaskModal from '../components/tasks/TaskModal';
-import Button from '../components/common/Button';
+import Header from '../../components/layouts/Header';
+import { tasks, statusOptions, priorityOptions, tagOptions } from '../../data/tasksData';
+import TaskModal from '../../components/tasks/TaskModal';
+import Button from '../../components/common/Button';
 
 const Tasks = () => {
   const [filteredTasks, setFilteredTasks] = useState([]);

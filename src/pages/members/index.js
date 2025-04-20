@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Plus, Filter, ChevronDown, User, Mail, Phone, Trash2, Edit, MoreHorizontal } from 'lucide-react';
-import Header from '../components/layouts/Header';
+import Header from '../../components/layouts/Header';
 
 const Members = () => {
   const navigate = useNavigate();
