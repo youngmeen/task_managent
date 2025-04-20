@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Clock, CheckSquare, AlertTriangle, Clock3, Plus } from 'lucide-react';
 import { tasksByStatus, priorityData, recentActivity, upcomingTasks, projectProgress } from '../data/sampleData';
-import Header from '../components/Header';
+import Header from '../components/layouts/Header';
 import { formatDate } from '../utils/dateUtils';
 import { formatPercent } from '../utils/formatUtils';
 import { getSessionStorage } from '../utils/storageUtils';

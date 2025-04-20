@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { User, LogOut, Menu, X, Sun, Moon } from 'lucide-react';
-import { ThemeContext } from '../contexts/ThemeContext';
-import { getSessionStorage, removeSessionStorage } from '../utils/storageUtils';
+import { ThemeContext } from '../../contexts/ThemeContext';
+import { getSessionStorage, removeSessionStorage } from '../../utils/storageUtils';
 
 const Header = () => {
 	const [user, setUser] = useState(null);

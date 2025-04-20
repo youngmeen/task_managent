@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Plus, Clock, MapPin } from 'lucide-react';
-import Header from '../components/Header';
+import Header from '../components/layouts/Header';
 import { calendarEvents, eventTypeOptions } from '../data/calendarData';
 
 const Calendar = () => {

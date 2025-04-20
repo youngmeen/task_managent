@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Plus, Filter, ChevronDown, Users, Calendar, ChevronRight } from 'lucide-react';
-import Header from '../components/Header';
+import Header from '../components/layouts/Header';
 import { projects, projectStatusOptions, projectPriorityOptions, teamMembers } from '../data/projectsData';
-import ProjectModal from '../components/modals/ProjectModal';
+import ProjectModal from '../components/projects/ProjectModal';
 
 const Projects = () => {
   const [filteredProjects, setFilteredProjects] = useState([]);

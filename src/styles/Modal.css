@@ -1,0 +1,155 @@
+/* Modal.css - 모달 컴포넌트 스타일 */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.modal-overlay--visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  background-color: var(--modal-bg, #ffffff);
+  border-radius: var(--modal-border-radius, 8px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: var(--modal-max-width, 500px);
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.modal--visible {
+  transform: translateY(0);
+}
+
+/* 모달 사이즈 변형 */
+.modal--size-sm {
+  max-width: 400px;
+}
+
+.modal--size-md {
+  max-width: 600px;
+}
+
+.modal--size-lg {
+  max-width: 800px;
+}
+
+.modal--size-xl {
+  max-width: 1000px;
+}
+
+.modal--size-full {
+  max-width: 95vw;
+  max-height: 95vh;
+}
+
+/* 모달 헤더 */
+.modal__header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--modal-border-color, rgba(0, 0, 0, 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--modal-title-color, #1a1a1a);
+}
+
+.modal__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  margin: -8px;
+  color: var(--modal-close-color, #666);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.modal__close:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--modal-close-hover-color, #333);
+}
+
+/* 모달 내용 */
+.modal__content {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* 모달 푸터 */
+.modal__footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--modal-border-color, rgba(0, 0, 0, 0.1));
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .modal {
+    --modal-bg: #2a2a2a;
+    --modal-border-color: rgba(255, 255, 255, 0.1);
+    --modal-title-color: #ffffff;
+    --modal-close-color: #aaa;
+    --modal-close-hover-color: #fff;
+  }
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(30px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* 접근성: 포커스 트랩 지원을 위한 스타일 */
+.modal:focus {
+  outline: none;
+}
+
+.modal:focus-visible {
+  outline: 2px solid var(--focus-color, #4d90fe);
+  outline-offset: 2px;
+}

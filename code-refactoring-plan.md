@@ -84,15 +84,33 @@ src/
 
 ### ✅ 공통 컴포넌트 구현
 - [x] `components/common/Button.js`
-- [ ] `components/common/Card.js`
-- [ ] `components/common/Modal.js`
-- [ ] `components/common/Badge.js`
-- [ ] `components/common/Dropdown.js`
+- [x] `components/common/Card.js`
+- [x] `components/common/Modal.js`
+- [x] `components/common/Badge.js`
+- [x] `components/common/Dropdown.js`
+
+### ✅ 폴더 구조 정리
+- [x] components 폴더 구조 개선
+  - [x] common/ - 공통 UI 컴포넌트
+  - [x] layouts/ - 레이아웃 관련 컴포넌트 (Header 등)
+  - [x] projects/ - 프로젝트 관련 컴포넌트
+  - [x] tasks/ - 업무 관련 컴포넌트
+- [x] pages 폴더 구조 개선
+  - [x] auth/ - 인증 관련 페이지
+  - [x] calendar/ - 캘린더 관련 페이지
+  - [x] dashboard/ - 대시보드 페이지
+  - [x] members/ - 구성원 관리 페이지
+  - [x] projects/ - 프로젝트 관련 페이지
+  - [x] tasks/ - 업무 관련 페이지
+  - [x] user/ - 사용자 프로필 관련 페이지
 
 ### ✅ 업무 컴포넌트
-- [ ] `components/tasks/TaskList.js`
-- [ ] `components/tasks/TaskItem.js`
-- [ ] `components/tasks/TaskFilters.js`
+- [x] `components/tasks/TaskList.js`
+- [x] `components/tasks/TaskFilters.js`
+- [x] `components/tasks/TaskModal.js`
+
+### ✅ 프로젝트 컴포넌트
+- [x] `components/projects/ProjectModal.js`
 
 ### ✅ 커스텀 훅 구현
 - [ ] `hooks/useTaskData.js`
@@ -100,11 +118,6 @@ src/
 - [ ] `hooks/useModal.js`
 - [ ] `hooks/useFilter.js`
 - [ ] `hooks/useSort.js`
-
-### ✅ 페이지 정리
-- [ ] `pages/Tasks.js`
-- [ ] `pages/Projects.js`
-- [ ] `pages/Dashboard.js`
 
 ## 7. 리팩토링 전략 및 가이드라인
 
@@ -133,6 +146,21 @@ src/
 ### 🚀 성능 개선
 - 렌더링 최적화 및 리소스 효율성 증가
 
+## 9. 작업 진행 상황
+
+### 2025년 4월 20일 작업 완료
+
+- 공통 컴포넌트 구현 (Button, Card, Modal, Badge, Dropdown)
+- 폴더 구조 개선 (컴포넌트 및 페이지 폴더링)
+- 중복 파일 정리 및 구조 정리
+- 메인 컴포넌트 이동 및 참조 경로 수정
+
+### 다음 작업 계획
+
+1. 커스텀 훅 구현 (useTaskData, useProjectData 등)
+2. 페이지 컴포넌트 내부 구조 리팩토링
+3. 성능 최적화 및 추가 기능 구현
+
 ## 📅 리팩토링 일정 요약
 
 | 기간 | 주요 내용 |
@@ -143,4 +171,3 @@ src/
 | 4~6주차 | 페이지 및 UI 컴포넌트 분리 |
 | 6~7주차 | 성능 최적화 및 리렌더링 정리 |
 | 7~8주차 | 문서화 및 테스트 최종 정리 |
-

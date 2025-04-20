@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Bell, Moon, Settings, Globe, LogOut, Clock } from 'lucide-react';
-import Header from '../components/Header';
+import Header from '../components/layouts/Header';
 import { userProfile, userNotifications, userActivities } from '../data/userData';
 
 const Profile = () => {

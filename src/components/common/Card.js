@@ -28,9 +28,9 @@
  * </Card>
  */
 
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import '../../../styles/Card.css'; // 스타일 디렉토리에서 불러오기
+import '../../../styles/Card.css';
 
 /**
  * Card 컴포넌트 - 다양한 콘텐츠를 담을 수 있는 컨테이너
@@ -60,52 +60,55 @@ const Card = ({
   variant = 'default',
   elevation = 1,
   hoverable = false,
-  onClick
+  onClick,
+  ...restProps
 }) => {
-  // 카드 기본 클래스와 추가 클래스, 옵션 기반 클래스를 결합
-  const cardClasses = [
-    'card',
-    `card--padding-${padding}`,
-    `card--variant-${variant}`,
-    `card--elevation-${elevation}`,
-    hoverable ? 'card--hoverable' : '',
-    onClick ? 'card--clickable' : '',
-    className
-  ].filter(Boolean).join(' ');
+  // 클래스명 생성 함수
+  const getCardClassNames = () => {
+    return [
+      'card',
+      `card--padding-${padding}`,
+      `card--variant-${variant}`,
+      `card--elevation-${elevation}`,
+      hoverable && 'card--hoverable',
+      onClick && 'card--clickable',
+      className
+    ].filter(Boolean).join(' ');
+  };
 
-  /**
-   * 조건부 헤더 렌더링 - 제목, 부제목 또는 우측 요소가 있을 때만 헤더 표시
-   * @returns {React.ReactElement|null} 카드 헤더 요소 또는 null
-   */
+  // 헤더 렌더링 함수
   const renderHeader = () => {
     if (!title && !subtitle && !headerRight) return null;
 
     return (
-      <div className="card__header">
+      <header className="card__header">
         <div className="card__header-content">
           {title && <h3 className="card__title">{title}</h3>}
           {subtitle && <h4 className="card__subtitle">{subtitle}</h4>}
         </div>
         {headerRight && <div className="card__header-right">{headerRight}</div>}
-      </div>
+      </header>
     );
   };
 
-  /**
-   * 조건부 푸터 렌더링 - 푸터 콘텐츠가 있을 때만 표시
-   * @returns {React.ReactElement|null} 카드 푸터 요소 또는 null
-   */
+  // 푸터 렌더링 함수
   const renderFooter = () => {
     if (!footer) return null;
-    return <div className="card__footer">{footer}</div>;
+    return <footer className="card__footer">{footer}</footer>;
   };
 
   return (
-    <div className={cardClasses} onClick={onClick} role={onClick ? 'button' : undefined}>
+    <article 
+      className={getCardClassNames()} 
+      onClick={onClick} 
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      {...restProps}
+    >
       {renderHeader()}
       <div className="card__content">{children}</div>
       {renderFooter()}
-    </div>
+    </article>
   );
 };
 
@@ -123,4 +126,5 @@ Card.propTypes = {
   onClick: PropTypes.func
 };
 
-export default Card;
+// memo를 사용하여 불필요한 리렌더링 방지
+export default memo(Card);
